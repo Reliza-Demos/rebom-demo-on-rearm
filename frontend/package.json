@@ -1,6 +1,7 @@
 {
   "name": "rebom_ui",
   "version": "0.1.0",
+  "description": "Reliza SBOM repository frontend",
   "private": true,
   "scripts": {
     "dev": "vite",
