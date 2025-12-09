@@ -2,9 +2,6 @@ on: [push]
 
 name: Build Docker Image And Submit Metadata To ReARM Demo
 
-permissions:
-  contents: write
-
 jobs:
   build-backend:
     name: Build And Push Backend
@@ -25,11 +22,13 @@ jobs:
           enable_sbom: 'true'
           source_code_sbom_type: 'npm'
   build-frontend:
+    permissions:
+      id-token: write
     name: Build And Push Frontend
     runs-on: ubuntu-latest
     steps:
       - name: ReARM Build And Submit Frontend Release metadata action
-        uses: relizaio/rearm-docker-action@89764de842ef450750d2e8536fb115bad85ef1c8 # v1.5.0
+        uses: relizaio/rearm-docker-action@cb05eb3589c5338339b73a6c22feacab1f9b0aea # experimental
         with:
           registry_username: ${{ secrets.DOCKER_LOGIN }}
           registry_password: ${{ secrets.DOCKER_TOKEN }}
@@ -42,7 +41,14 @@ jobs:
           path: frontend
           enable_sbom: 'true'
           source_code_sbom_type: 'npm'
+          enable_public_cosign_sigstore: 'true'
+          enable_shiftleftcyber: 'true'
+          shiftleftcyber_host: https://secure-sbom-api-prod-gateway-dhncnyq8.uc.gateway.dev
+          shiftleftcyber_key: ${{ secrets.ShiftLeftCyberApiKey }}
+          shiftleftcyber_pub_key_id: ${{ secrets.ShiftLeftCyberPubKeyId }}
   build-helm:
+    permissions:
+      contents: write
     name: Build And Push Helm Chart
     runs-on: ubuntu-latest
     steps:
