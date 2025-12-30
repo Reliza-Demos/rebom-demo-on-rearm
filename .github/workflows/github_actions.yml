@@ -45,7 +45,7 @@ jobs:
           enable_shiftleftcyber: 'true'
           shiftleftcyber_host: https://secure-sbom-api-prod-gateway-dhncnyq8.uc.gateway.dev
           shiftleftcyber_key: ${{ secrets.ShiftLeftCyberApiKey }}
-          shiftleftcyber_pub_key_id: ${{ secrets.ShiftLeftCyberPubKeyId }}
+          shiftleftcyber_pub_key_id: ${{ secrets.ShiftLeftCyberPubKeyIdv }}
   build-helm:
     permissions:
       contents: write
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ReARM Build And Submit Helm Chart Release metadata action
-        uses: relizaio/rearm-helm-action@7bd5670cfb02a44a9e6a1e91acc03d4958a13ee7 # v1.4.0
+        uses: relizaio/rearm-helm-action@2e41528bbb6bb8918ef0ff1c6df187cf8766498d # v1.4.0
         with:
           registry_username: ${{ secrets.DOCKER_LOGIN }}
           registry_password: ${{ secrets.DOCKER_TOKEN }}
